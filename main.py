@@ -21,10 +21,9 @@ async def root():
 
 if __name__ == "__main__":
     run(
-        "main:app",
+        app="main:app",
         host="0.0.0.0",
         port=8080,
         reload=True,
         reload_dirs=[os.path.basename(os.path.dirname(__file__))],
-        log_level="debug",
     )

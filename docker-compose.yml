@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  pgbouncer:
+    container_name: "shortner_pgbouncer"
+    build:
+      context: .
+      dockerfile: database/Dockerfile
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - "6432:6432"
+    depends_on:
+      - db
+
+  db:
+    container_name: "shortener_postgres"
+    image: "postgres:14"
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3

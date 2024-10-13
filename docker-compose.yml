@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+  app:
+    container_name: "shortener_app"
+    build: ./
+    env_file:
+      - ./.env
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+
   pgbouncer:
     container_name: "shortener_pgbouncer"
     build:

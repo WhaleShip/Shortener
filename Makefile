@@ -2,7 +2,7 @@ ENV_FILE = .env
 
 MAKEFILE_DIR = $(shell readlink -f $(shell dirname $(lastword $(MAKEFILE_LIST))))
 
-CORRECT_PYTHONPATH = $(MAKEFILE_DIR)
+PROJECT_PATH = $(MAKEFILE_DIR)
 
 
 ENV_VARS = \
@@ -21,15 +21,25 @@ env:
 	@printf "%s\n" $(ENV_VARS) > $(ENV_FILE)
 	@echo "$(ENV_FILE) file created"
 
-run:
+db:
+	@docker compose up --build -d db pgbouncer
+
+run-app:
+	@docker compose up --build -d app
+
+off-app:
+	@docker compose down app
+
+autorun:
 	@chmod +x scripts/pgbouncer/entrypoint.sh
 	@docker compose up --build -d
+	@make migrate
 
 off:
 	@docker compose down
 
 revision:
-	@cd database && PYTHONPATH=$(CORRECT_PYTHONPATH) alembic revision --autogenerate
+	@cd database && PYTHONPATH=$(PROJECT_PATH) alembic revision --autogenerate
 
 migrate:
-	cd database && PYTHONPATH=$(CORRECT_PYTHONPATH) alembic upgrade head
+	cd database && PYTHONPATH=$(PROJECT_PATH) $(PROJECT_PATH)/venv/bin/alembic upgrade head

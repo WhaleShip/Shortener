@@ -10,12 +10,13 @@ from configuration import EndpointsList
 
 
 async def get_short(session: AsyncSession):
-    config = ServiceSettings
+    config = ServiceSettings()
     while True:
-        suffix = "".join(choice(ascii_uppercase + digits) for _ in range(5))
+        suffix = "".join(choice(ascii_uppercase + digits) for _ in range(8))
         exist_query = select(exists().where(Link.suffix == suffix))
         exist = await session.scalar(exist_query)
         if not exist:
             break
-    short_url = f"{config.APP_HOST}:{config.APP_PORT}{EndpointsList.redirect}{suffix}"
-    return short_url
+
+    short_url = f"{config.APP_HOST}:{config.APP_PORT}{EndpointsList.redirect}/{suffix}"
+    return short_url, suffix

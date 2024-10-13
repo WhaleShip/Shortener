@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from utils import singleton
 
 
-database = environ.get("POSTGRES_DB", "shortner_postgres")
+database = environ.get("POSTGRES_DB", "shortener_postgres")
 user =  environ.get("POSTGRES_USER", "user")
 password =  environ.get("POSTGRES_PASSWORD", "pass")
 host =  environ.get("PGBOUNCER_HOST", "shortner_pgbouncer")
@@ -26,10 +26,4 @@ class SessionManager:
 async def get_session() -> AsyncSession:
     session_maker = SessionManager().get_session_maker()
     async with session_maker() as session:
-        try:
-            yield session
-        except Exception:
-            await session.rollback()
-            raise
-        finally:
-            await session.close()
+        yield session

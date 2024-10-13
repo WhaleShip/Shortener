@@ -3,7 +3,7 @@ from os import environ
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
-from utils.singleton import singleton
+from utils import singleton
 
 
 database = environ.get("POSTGRES_DB", "shortner_postgres")
@@ -17,7 +17,7 @@ port = environ.get("PGBOUNCER_PORT", "6432")
 @singleton
 class SessionManager:
     def __init__(self) -> None:
-        self.engine = create_async_engine(f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{database}", echo=True, future=True)
+        self.engine = create_async_engine(f"postgresql+asyncpg://{user}:{password}@localhost:{port}/{database}", echo=True, future=True)
 
     def get_session_maker(self) -> sessionmaker:
         return sessionmaker(self.engine, class_=AsyncSession, expire_on_commit=False)

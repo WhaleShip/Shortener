@@ -4,6 +4,8 @@ MAKEFILE_DIR = $(shell readlink -f $(shell dirname $(lastword $(MAKEFILE_LIST)))
 
 PROJECT_PATH = $(MAKEFILE_DIR)
 
+VENV_PATH = $(PROJECT_PATH)/venv
+
 
 ENV_VARS = \
 	APP_HOST=0.0.0.0 \
@@ -39,7 +41,7 @@ off:
 	@docker compose down
 
 revision:
-	@cd database && PYTHONPATH=$(PROJECT_PATH) alembic revision --autogenerate
+	@cd database && PYTHONPATH=$(PROJECT_PATH) $(VENV_PATH)/bin/alembic revision --autogenerate
 
 migrate:
-	cd database && PYTHONPATH=$(PROJECT_PATH) $(PROJECT_PATH)/venv/bin/alembic upgrade head
+	cd database && PYTHONPATH=$(PROJECT_PATH) $(VENV_PATH)/bin/alembic upgrade head

@@ -16,7 +16,7 @@ port = environ.get("PGBOUNCER_PORT", "6432")
 class SessionManager:
     def __init__(self) -> None:
         self.engine = create_async_engine(
-            f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{database}",
+            f"postgresql+asyncpg://{user}:{password}@localhost:{port}/{database}",
             echo=True,
             future=True,
         )

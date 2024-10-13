@@ -5,7 +5,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_session
 from database.crud import get_user, create_user
 from database.crud.users import pwd_context
-from database.session_manager import password
 from schemas import User
 from schemas import UserCreate
 

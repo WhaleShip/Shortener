@@ -2,11 +2,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.models import User
+from logic import pwd_context
 from schemas import UserCreate
-from passlib.context import CryptContext
 
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 async def get_user(username: str, session: AsyncSession) -> User:
     query_result = await session.execute(

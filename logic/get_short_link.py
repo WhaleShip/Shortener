@@ -1,12 +1,11 @@
 from random import choice
 from string import ascii_uppercase, digits
 
-from sqlalchemy import select, exists
+from sqlalchemy import exists, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from configuration import ServiceSettings
+from configuration import EndpointsList, ServiceSettings
 from database.models import Link
-from configuration import EndpointsList
 
 
 async def get_short(session: AsyncSession):

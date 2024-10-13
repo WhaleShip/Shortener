@@ -1,11 +1,12 @@
 from sqlalchemy import MetaData
 from sqlalchemy.orm import declarative_base
 
-from database.session_manager import get_session, SessionManager
+from database.session_manager import SessionManager, get_session
 
 
 def get_conn_engine():
     return SessionManager().engine
+
 
 convention = {
     "all_column_names": lambda constraint, table: "_".join(

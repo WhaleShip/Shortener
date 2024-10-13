@@ -1,7 +1,6 @@
-from schemas.link import ShorterCreation, DefaultResponse
+from schemas.link import DefaultResponse, ShorterCreation
 
-__all__ =[
+__all__ = [
     "ShorterCreation",
     "DefaultResponse",
 ]
-

@@ -1,5 +1,5 @@
 from utils.singleton import singleton
 
-__all__= [
+__all__ = [
     "singleton",
 ]

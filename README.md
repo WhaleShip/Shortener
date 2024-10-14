@@ -25,12 +25,14 @@ git clone https://github.com/WhaleShip/BucketBot.git
 make env
 ```
 
-### 3. run service
+### 3. Run service
 ```commandline
 make autorun
 ```
 
-### to turn off the service
+<Br>
+
+### To turn off the service
 ```commandline
 make off
 ```

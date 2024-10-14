@@ -1,22 +1,15 @@
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
-class Link(BaseModel):
+
+class LinkResponse(BaseModel):
     id: int
     url: str
-    short_url: str
+    suffix: str
     owner_id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ShorterCreation(BaseModel):
     original_url: str
 
-
-class DefaultResponse(BaseModel):
-    original_url: str
-    short_url: str
-
-    class Config:
-        orm_mode = True

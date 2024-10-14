@@ -9,7 +9,7 @@ VENV_PATH = $(PROJECT_PATH)/.venv
 
 ENV_VARS = \
 	APP_HOST=0.0.0.0 \
-	APP_PORT=8080 \
+	APP_PORT=8090 \
     POSTGRES_DB=shortener_postgres \
     POSTGRES_USER=user \
     POSTGRES_PASSWORD=pass \

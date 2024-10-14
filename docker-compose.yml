@@ -5,7 +5,7 @@ services:
     env_file:
       - ./.env
     ports:
-      - "8080:8080"
+      - ${APP_PORT}:${APP_PORT}
     depends_on:
       db:
         condition: service_healthy
@@ -20,7 +20,7 @@ services:
     env_file:
       - ./.env
     ports:
-      - "6432:6432"
+      - ${PGBOUNCER_PORT}:${PGBOUNCER_PORT}
     depends_on:
       - db
 

@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from uvicorn import run
 
+from configuration import ServiceSettings
 from endpoints import routers
 
 
@@ -31,10 +32,11 @@ app = get_configured_app()
 
 
 if __name__ == "__main__":
+    config = ServiceSettings()
     run(
         app="main:app",
-        host="0.0.0.0",
-        port=8080,
+        host=config.APP_HOST,
+        port=config.APP_PORT,
         reload=True,
         reload_dirs=[os.path.basename(os.path.dirname(__file__))],
     )

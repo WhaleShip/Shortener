@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, ConfigDict
 
 
@@ -10,6 +9,6 @@ class LinkResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+
 class ShorterCreation(BaseModel):
     original_url: str
-

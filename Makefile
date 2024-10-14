@@ -4,7 +4,7 @@ MAKEFILE_DIR = $(shell readlink -f $(shell dirname $(lastword $(MAKEFILE_LIST)))
 
 PROJECT_PATH = $(MAKEFILE_DIR)
 
-VENV_PATH = $(PROJECT_PATH)/venv
+VENV_PATH = $(PROJECT_PATH)/.venv
 
 
 ENV_VARS = \
@@ -35,7 +35,7 @@ off-app:
 autorun:
 	@chmod +x scripts/pgbouncer/entrypoint.sh
 	@docker compose up --build -d
-	@make migrate
+	@docker compose exec app python3 scripts/database/alembic_migrate.py
 
 off:
 	@docker compose down

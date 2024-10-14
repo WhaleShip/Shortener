@@ -7,12 +7,12 @@ from starlette import status
 
 from configuration import ACCESS_TOKEN_EXPIRE_MINUTES
 from database import get_session
-from database.crud import get_user_by_username, create_user
-from logic.secrets import verify_password, create_access_token
-from schemas import User, Token
-from schemas import UserCreate
+from database.crud import create_user, get_user_by_username
+from logic import create_access_token, verify_password
+from schemas import Token, User, UserCreate
 
 auth_router = APIRouter(tags=["Url"])
+
 
 @auth_router.post("/register")
 async def register(user: UserCreate, session: AsyncSession = Depends(get_session)):
@@ -22,15 +22,19 @@ async def register(user: UserCreate, session: AsyncSession = Depends(get_session
     new_user = await create_user(user, session)
     return {"message": f"User {new_user.username} registered successfully"}
 
+
 async def authenticate_user(username: str, password: str, session):
     user = await get_user_by_username(username, session)
     if user is None or not verify_password(password, user.hashed_password):
         return False
     return user
 
+
 @auth_router.post("/token", response_model=Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(),
-                                 session: AsyncSession = Depends(get_session)):
+async def login_for_access_token(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    session: AsyncSession = Depends(get_session),
+):
     user = await authenticate_user(form_data.username, form_data.password, session)
     if not user:
         raise HTTPException(

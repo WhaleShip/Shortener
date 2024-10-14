@@ -1,6 +1,6 @@
-from schemas.link import ShorterCreation, LinkResponse
-from schemas.user import UserCreate, User
 from schemas.auth import Token
+from schemas.link import LinkResponse, ShorterCreation
+from schemas.user import User, UserCreate
 
 __all__ = [
     "LinkResponse",

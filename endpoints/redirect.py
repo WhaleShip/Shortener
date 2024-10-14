@@ -24,7 +24,7 @@ async def get_link(suffix: str, session: AsyncSession = Depends(get_session)):
         select(Link).filter(Link.suffix == suffix).with_for_update()
     )
     link = query_result.scalar_one_or_none()
-    
+
     if link is None:
         raise HTTPException(status_code=404, detail="Link not found")
     return RedirectResponse(link.url)

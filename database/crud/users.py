@@ -4,12 +4,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
+from configuration import ALGORITHM, SECRET_KEY, oauth2_scheme, pwd_context
 from database import get_session
 from database.models import User
-from configuration import pwd_context, oauth2_scheme, SECRET_KEY, ALGORITHM
 from schemas import UserCreate
-
-
 
 
 async def get_user_by_username(username: str, session: AsyncSession) -> User:
@@ -17,6 +15,7 @@ async def get_user_by_username(username: str, session: AsyncSession) -> User:
         select(User).filter(User.username == username).with_for_update()
     )
     return query_result.scalar_one_or_none()
+
 
 async def create_user(user: UserCreate, session: AsyncSession):
     hashed_password = pwd_context.hash(user.password)
@@ -27,7 +26,9 @@ async def create_user(user: UserCreate, session: AsyncSession):
     return db_user
 
 
-async def get_current_user(session: AsyncSession = Depends(get_session), token: str = Depends(oauth2_scheme)):
+async def get_current_user(
+    session: AsyncSession = Depends(get_session), token: str = Depends(oauth2_scheme)
+):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",

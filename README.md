@@ -2,7 +2,7 @@
 This FastAPI application is designed to shorten and manage URLs. It also includes support for user authentication and authorization.
 
 ## Stack
-- Python
+- Python 3.11
 - FastAPI
 - SQLAlchemy
 - Pydantic

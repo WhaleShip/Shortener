@@ -30,6 +30,8 @@ make env
 make autorun
 ```
 
+#### swagger is available on [0.0.0.0:8090/swagger](http://0.0.0.0:8090/swagger)
+
 <Br>
 
 ### To turn off the service

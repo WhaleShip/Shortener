@@ -38,7 +38,7 @@ def convert_links_to_schemas(links: List[Link]) -> List[LinkResponse]:
     return [convert_link_to_schema(link) for link in links]
 
 
-@shortener_router.get("/links/", response_model=list[LinkResponse])
+@shortener_router.get(EndpointsList.users_links, response_model=list[LinkResponse])
 async def get_user_links(
     session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_user),
@@ -47,7 +47,7 @@ async def get_user_links(
     return convert_links_to_schemas(db_links)
 
 
-@shortener_router.delete("/links/{link_suffix}", response_model=dict)
+@shortener_router.delete(EndpointsList.users_links+"/{link_suffix}", response_model=dict)
 async def delete_link_endpoint(
     link_suffix: str,
     session: AsyncSession = Depends(get_session),

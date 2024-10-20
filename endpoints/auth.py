@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from configuration import ACCESS_TOKEN_EXPIRE_MINUTES
+from configuration import ACCESS_TOKEN_EXPIRE_MINUTES, EndpointsList
 from database import get_session
 from database.crud import create_user, get_user_by_username
 from logic import create_access_token, verify_password
@@ -14,7 +14,7 @@ from schemas import Token, User, UserCreate
 auth_router = APIRouter(tags=["Url"])
 
 
-@auth_router.post("/register")
+@auth_router.post(EndpointsList.registration)
 async def register(user: UserCreate, session: AsyncSession = Depends(get_session)):
     db_user = await get_user_by_username(user.username, session)
     if db_user:
@@ -30,7 +30,7 @@ async def authenticate_user(username: str, password: str, session):
     return user
 
 
-@auth_router.post("/token", response_model=Token)
+@auth_router.post(EndpointsList.login, response_model=Token)
 async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
     session: AsyncSession = Depends(get_session),
